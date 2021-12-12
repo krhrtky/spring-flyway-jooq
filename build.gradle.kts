@@ -4,6 +4,7 @@ plugins {
     id("org.springframework.boot") version "2.6.1"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("nu.studer.jooq") version "6.0.1"
+    id("org.flywaydb.flyway") version "8.2.1"
     kotlin("jvm") version "1.6.0"
     kotlin("plugin.spring") version "1.6.0"
 }
@@ -18,7 +19,7 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-jooq")
-//    implementation("org.jooq:jooq-codegen:3.14.0")
+    implementation("org.jooq:jooq-codegen:3.15.4")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.flywaydb:flyway-core")
@@ -29,14 +30,6 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     jooqGenerator("org.postgresql:postgresql:42.2.14")
 }
-
-//buildscript {
-//    configurations["classpath"].resolutionStrategy.eachDependency {
-//        if (requested.group == "org.jooq") {
-//            useVersion("3.14.0")
-//        }
-//    }
-//}
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
@@ -49,7 +42,14 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+flyway {
+    url = "jdbc:postgresql://localhost:5432/postgres"
+    user = "postgres"
+    password = ""
+}
+
 jooq {
+    version.set("3.15.4")
     configurations {
         create("main") {
             jooqConfiguration.apply {
