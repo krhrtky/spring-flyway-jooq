@@ -41,6 +41,10 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+tasks.withType<nu.studer.gradle.jooq.JooqGenerate> {
+    dependsOn("flywayMigrate")
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
 }
