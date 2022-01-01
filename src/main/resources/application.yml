@@ -8,3 +8,6 @@ spring:
     password: ${DB_PASSWORD:''}
   jooq:
     sql-dialect: postgres
+logging:
+  level:
+    root: debug
